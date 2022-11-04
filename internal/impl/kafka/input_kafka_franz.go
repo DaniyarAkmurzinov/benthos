@@ -331,6 +331,8 @@ func (f *franzKafkaReader) Connect(ctx context.Context) error {
 		kgo.AutoCommitMarks(),
 		kgo.AutoCommitInterval(f.commitPeriod),
 		kgo.WithLogger(&kgoLogger{f.log}),
+		kgo.DisableIdempotentWrite(),
+		kgo.RequiredAcks(kgo.NoAck()),
 	}
 
 	if f.tlsConf != nil {
