@@ -346,6 +346,8 @@ func (f *franzKafkaReader) Connect(ctx context.Context) error {
 	if f.regexPattern {
 		clientOpts = append(clientOpts, kgo.ConsumeRegex())
 	}
+	clientOpts = append(clientOpts, kgo.DisableIdempotentWrite())
+	clientOpts = append(clientOpts, kgo.RequiredAcks(kgo.NoAck()))
 
 	cl, err := kgo.NewClient(clientOpts...)
 	if err != nil {
